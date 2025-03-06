@@ -25,15 +25,6 @@ connection.connect(err => {
 
 module.exports = connection;
 
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection failed:', err);
-    } else {
-        console.log('Connected to MySQL database');
-    }
-});
-
-
 app.post('/submit-wish', (req, res) => {
     const { name, message } = req.body;
     const query = 'INSERT INTO wishes (name, message) VALUES (?, ?)';
