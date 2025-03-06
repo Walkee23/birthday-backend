@@ -23,12 +23,11 @@ connection.connect(err => {
     console.log("✅ Connected to Railway MySQL!");
 });
 
-module.exports = connection;
-
 app.post('/submit-wish', (req, res) => {
     const { name, message } = req.body;
     const query = 'INSERT INTO wishes (name, message) VALUES (?, ?)';
-    db.query(query, [name, message], (err, result) => {
+    
+    connection.query(query, [name, message], (err, result) => { // Changed db.query to connection.query
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Failed to submit wish' });
@@ -39,7 +38,7 @@ app.post('/submit-wish', (req, res) => {
 });
 
 app.get('/get-wishes', (req, res) => {
-    db.query('SELECT * FROM wishes ORDER BY created_at DESC', (err, results) => {
+    connection.query('SELECT * FROM wishes ORDER BY created_at DESC', (err, results) => { // Changed db.query to connection.query
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Failed to fetch wishes' });
