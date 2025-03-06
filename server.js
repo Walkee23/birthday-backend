@@ -7,13 +7,23 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const db = mysql.createConnection({
-    host: 'mysql.railway.internal', 
-    user: 'root',
-    password: 'DfIohBtkvMtNFDtnCtMfDrWohCeqSgeU',
-    database: 'railway',
-    port: 3306
+const connection = mysql.createConnection({
+    host: "hopper.proxy.rlwy.net",
+    user: "root",
+    password: "DfIohBtkvMtNFDtnCtMfDrWohCeqSgeU",
+    database: "railway",
+    port: 42690
 });
+
+connection.connect(err => {
+    if (err) {
+        console.error("❌ Database connection failed:", err);
+        return;
+    }
+    console.log("✅ Connected to Railway MySQL!");
+});
+
+module.exports = connection;
 
 db.connect((err) => {
     if (err) {
